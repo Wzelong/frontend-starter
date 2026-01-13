@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { ToastProvider } from "@/components/toast-provider"
+import { Header, LeftNav, MainContent } from "@/components/layout"
 
 export const metadata: Metadata = {
   title: "App",
@@ -20,7 +21,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <ToastProvider>{children}</ToastProvider>
+          <ToastProvider>
+            <Header />
+            <LeftNav />
+            <MainContent>{children}</MainContent>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

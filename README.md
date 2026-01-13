@@ -1,6 +1,6 @@
 # UI Starter Package
 
-Clean, reusable Next.js layout with header, left nav, mobile menu, and theme support.
+Clean Next.js layout with header, left nav, mobile menu, and theme support.
 
 ## Quick Start
 
@@ -12,32 +12,35 @@ npx degit Wzelong/frontend-starter my-app && cd my-app && npm i && npm i next-th
 
 ```
 ├── app/
-│   ├── layout.tsx          # Root layout (providers)
-│   ├── globals.css         # Theme + base styles
-│   ├── (app)/              # Protected routes
-│   │   ├── layout.tsx      # App layout (header + nav)
-│   │   └── dashboard/
-│   └── (public)/           # Public routes
-│       ├── layout.tsx      # Simple header + footer
-│       └── page.tsx
+│   ├── layout.tsx       # Root layout (header + nav + providers)
+│   ├── globals.css      # Theme + base styles
+│   ├── page.tsx         # Home page
+│   └── dashboard/       # Example route
 ├── components/
 │   ├── layout/
-│   │   ├── index.ts        # Barrel export
 │   │   ├── nav-config.ts   # ← Edit this for nav items
 │   │   ├── header.tsx
 │   │   ├── left-nav.tsx
 │   │   ├── mobile-menu.tsx
-│   │   ├── main-content.tsx
-│   │   ├── theme-toggle.tsx
-│   │   └── user-menu.tsx
+│   │   └── ...
 │   ├── theme-provider.tsx
 │   └── toast-provider.tsx
-├── lib/
-│   └── utils.ts
-└── components/ui/          # shadcn/ui components
+└── lib/
+    └── utils.ts
 ```
 
 ## Customization
+
+### Nav Items
+
+Edit `components/layout/nav-config.ts`:
+
+```ts
+export const navItems: NavItem[] = [
+  { href: "/", icon: Home, label: "Home" },
+  { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+]
+```
 
 ### Header
 
@@ -48,16 +51,6 @@ npx degit Wzelong/frontend-starter my-app && cd my-app && npm i && npm i next-th
 />
 ```
 
-### User Menu
-
-```tsx
-<UserMenu
-  avatarUrl={user?.avatar}
-  avatarFallback={user?.name?.[0]}
-  onLogout={async () => await supabase.auth.signOut()}
-/>
-```
-
 ### Toast
 
 ```tsx
@@ -65,16 +58,9 @@ import { useToast } from "@/components/toast-provider"
 
 const toast = useToast()
 toast.success("Saved!")
-toast.error("Failed")
 ```
 
-## Layout Breakpoints
+## Layout
 
-- Mobile: `< md` (header + mobile menu)
-- Desktop: `≥ md` (header + left nav)
-
-## Route Groups
-
-- `(app)` - Protected routes with full layout
-- `(public)` - Public routes with simple layout
-- Add `(auth)` for login/signup pages
+- Mobile: header + mobile menu dropdown
+- Desktop: header + left nav sidebar
